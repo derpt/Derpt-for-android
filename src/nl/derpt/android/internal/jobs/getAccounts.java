@@ -16,9 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import nl.derpt.android.MainActivity;
 import nl.derpt.android.internal.Account;
 import nl.derpt.android.internal.JSON.ServerAccounts;
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 
 /**
@@ -60,6 +58,7 @@ public class getAccounts extends Job {
 		for(int i = 0; i < rs.size(); i++)
 		{
 			Account ac = new Account(rs.get(i).screen_name);
+			ac.setId(rs.get(i)._id);
 			adapter.add(ac);
 		}
 		

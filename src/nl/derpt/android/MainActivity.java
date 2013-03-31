@@ -29,6 +29,8 @@ public class MainActivity extends Activity implements
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	
+	private Manager manager;
 
 	public ArrayAdapter<Account> adapter;
 
@@ -50,7 +52,7 @@ public class MainActivity extends Activity implements
 
 		setContentView(R.layout.activity_main);
 
-		Manager manager = new Manager(this);
+		manager = new Manager(this);
 
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
@@ -103,24 +105,23 @@ public class MainActivity extends Activity implements
 		// When the given dropdown item is selected, show its contents in the
 		// container view.
 
-		Fragment fragment = null;
-		if (adapter.getItem(position).getName()
+		int item = R.string.waiting;
+		if (!adapter.getItem(position).getName()
 				.equals(getString(R.string.waiting))) {
-			// Waiting for server :).
-			fragment = new waitingFragment();
-		} else {
-			fragment = new DummySectionFragment();
+			this.manager.getFirstUnreadTweet(adapter.getItem(position));
+			item = R.string.waiting2;
 		}
+		Fragment fragment = new waitingFragment();
 
 		Bundle args = new Bundle();
-		args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+		args.putInt("lang", item);
 		fragment.setArguments(args);
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, fragment).commit();
 		return true;
 	}
 
-	public static class waitingFragment extends Fragment {
+	public static class waitingFragment extends Fragment {		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -128,36 +129,8 @@ public class MainActivity extends Activity implements
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
-			dummyTextView.setText(getString(R.string.waiting));
+			dummyTextView.setText(this.getArguments().getInt("lang")); 
 			return rootView;
 		}
 	}
-
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		public static final String ARG_SECTION_NUMBER = "section_number";
-
-		public DummySectionFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
-					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
-		}
-	}
-
 }

@@ -4,6 +4,8 @@ public class Account {
 
 	private String name;
 	
+	private String id;
+	
 	/**
 	 * Create a new account based from the server.
 	 * 
@@ -28,6 +30,14 @@ public class Account {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

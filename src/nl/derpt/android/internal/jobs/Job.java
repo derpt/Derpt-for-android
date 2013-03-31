@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 import nl.derpt.android.internal.JSON.Base;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * @author paul_000
@@ -63,9 +64,10 @@ public abstract class Job extends AsyncTask<Void, Void, Boolean> {
 	
 	protected HttpResponse doGet(String path)
 	{
-		HttpGet httpget = new HttpGet("http://www.derpt.nl" + path);
+		Log.d("derpt", "GET URL: http://www.derpt.nl" + path);
 		
 		try {
+			HttpGet httpget = new HttpGet("http://www.derpt.nl" + path);
 			HttpResponse r = this.manager.httpclient.execute(httpget);
 			
 			this.response = EntityUtils.toString(r.getEntity());
@@ -80,6 +82,7 @@ public abstract class Job extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	protected HttpResponse doPost(String path) {
+		Log.d("derpt", "POST URL: http://www.derpt.nl" + path);
 		try {
 			HttpPost httppost = new HttpPost("http://www.derpt.nl" + path);
 

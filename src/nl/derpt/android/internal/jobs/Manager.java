@@ -4,7 +4,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import nl.derpt.android.internal.Account;
-import nl.derpt.android.internal.JSON.Base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -67,6 +66,11 @@ public class Manager {
 	public void login(Job job)
 	{
 		RunJob(new login(this.context, this, job), false);
+	}
+	
+	public void getFirstUnreadTweet(Account ac)
+	{
+		RunJob(new GetFirstUnreadTweet(this.context, this, ac));
 	}
 	
 	/**
