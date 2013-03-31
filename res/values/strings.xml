@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Derpt</string>
+    <string name="action_settings">Settings</string>
+    <string name="waiting">Waiting to retreive accounts</string>
+
+
+</resources>
