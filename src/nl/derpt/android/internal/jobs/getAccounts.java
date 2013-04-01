@@ -17,25 +17,19 @@ import nl.derpt.android.MainActivity;
 import nl.derpt.android.internal.Account;
 import nl.derpt.android.internal.JSON.ServerAccounts;
 import android.content.Context;
-import android.widget.ArrayAdapter;
 
 /**
  * @author paul_000
  *
  */
 public class getAccounts extends Job {
-
-	private ArrayAdapter<Account> adapter;
-
-
 	/**
 	 * @param context
 	 * @param manager
 	 * @param adapter
 	 */
-	public getAccounts(Context context,  Manager manager, ArrayAdapter<Account> adapter) {
+	public getAccounts(Context context,  Manager manager) {
 		super(context, manager);
-		this.adapter = adapter;
 	}
 
 
@@ -53,16 +47,20 @@ public class getAccounts extends Job {
 		
 		ArrayList<ServerAccounts> rs = parser.fromJson(this.response, listType);
 		
-		adapter.clear();
+		((MainActivity)this.context).accounts.clear();
 		
 		for(int i = 0; i < rs.size(); i++)
 		{
 			Account ac = new Account(rs.get(i).screen_name);
 			ac.setId(rs.get(i)._id);
-			adapter.add(ac);
+			((MainActivity)this.context).accounts.add(ac);
 		}
 		
-		((MainActivity) this.context).onNavigationItemSelected(0,0);
+		// TODO: If > 1 account, choose account to use.
+		
+		((MainActivity)this.context).account = ((MainActivity)this.context).accounts.get(0);
+		
+		((MainActivity)this.context).markWaiting(false);
 
 		this.manager.showProgress(false);
 	}

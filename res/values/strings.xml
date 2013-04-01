@@ -3,8 +3,13 @@
 
     <string name="app_name">Derpt</string>
     <string name="action_settings">Settings</string>
-    <string name="waiting">Waiting to retreive accounts</string>
+    <string name="waiting">Waiting to receive accounts</string>
     <string name="waiting2">Waiting to receive latest unread tweet</string>
+    
+    <string name="unknown">Unknown</string>
+    <string name="DM">DMs</string>
+    <string name="mentions">Mentions</string>
+    <string name="tweets">Tweets</string>
 
 
 </resources>

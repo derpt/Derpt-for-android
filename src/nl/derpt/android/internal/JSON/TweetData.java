@@ -11,4 +11,5 @@ public class TweetData implements Serializable {
 	public String prev;
 	
 	public Tweet tweet;
+	public String unread;
 }

@@ -3,12 +3,10 @@ package nl.derpt.android.internal.jobs;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import nl.derpt.android.internal.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.ArrayAdapter;
 
 public class Manager {
 	private Context context;
@@ -68,16 +66,33 @@ public class Manager {
 		RunJob(new login(this.context, this, job), false);
 	}
 	
-	public void getFirstUnreadTweet(Account ac)
+	/**
+	 * Get the first unread tweet from the server
+	 * 
+	 * @param ac
+	 */
+	public void getFirstUnreadTweet()
 	{
-		RunJob(new GetFirstUnreadTweet(this.context, this, ac));
+		RunJob(new GetFirstUnreadTweet(this.context, this));
+	}
+	
+	/**
+	 * Get a specific tweet from the server.
+	 * This method uses the Derpt specific ID, not the twitter id.
+	 * 
+	 * @param ac
+	 * @param tweet
+	 */
+	public void getTweet(String tweet)
+	{
+		RunJob(new GetTweet(this.context, this, tweet));
 	}
 	
 	/**
 	 * Receive the accounts from the server and display them in the manager.
 	 */
-	public void getAccounts(ArrayAdapter<Account> adapter) {
-		RunJob(new getAccounts(this.context, this, adapter));
+	public void getAccounts() {
+		RunJob(new getAccounts(this.context, this));
 	}	
 
 	public void RunJob(Job job) {

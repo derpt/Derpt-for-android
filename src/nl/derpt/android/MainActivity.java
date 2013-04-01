@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import nl.derpt.android.internal.Account;
 import nl.derpt.android.internal.jobs.Manager;
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,24 +17,27 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements
-		ActionBar.OnNavigationListener {
+public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
 	 */
-	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	//private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
-	private Manager manager;
+	public Manager manager;
+	
+	public Menu menu;
 
-	public ArrayAdapter<Account> adapter;
+	public ArrayList<Account> accounts;
+	
+	public Account account;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,27 +61,23 @@ public class MainActivity extends Activity implements
 
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		ArrayList<Account> actions = new ArrayList<Account>();
-
-		actions.add(new Account(getString(R.string.waiting)));
-
-		/** Create an array adapter to populate dropdownlist */
-		adapter = new ArrayAdapter<Account>(actionBar.getThemedContext(),
-				android.R.layout.simple_list_item_1, android.R.id.text1,
-				actions);
-
+		actionBar.setDisplayShowTitleEnabled(true);
+		accounts = new ArrayList<Account>();
+	 
 		/** Enabling dropdown list navigation for the action bar */
-		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		//getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		/**
 		 * Setting dropdown items and item navigation listener for the actionbar
 		 */
-		getActionBar().setListNavigationCallbacks(adapter, this);
-		manager.getAccounts(this.adapter);
-
+		manager.getAccounts();
+		
+		markWaiting(true);
+		
+		actionBar.removeAllTabs();
 	}
-
+	
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		// Restore the previously serialized current dropdown position.
@@ -97,19 +98,36 @@ public class MainActivity extends Activity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		
+		this.menu = menu;
 		return true;
 	}
-
-	@Override
-	public boolean onNavigationItemSelected(int position, long id) {
-		// When the given dropdown item is selected, show its contents in the
-		// container view.
-
+	
+	public void markWaiting(boolean first) {
 		int item = R.string.waiting;
-		if (!adapter.getItem(position).getName()
-				.equals(getString(R.string.waiting))) {
-			this.manager.getFirstUnreadTweet(adapter.getItem(position));
+		if (!first) {
+			getActionBar().removeAllTabs();
+			
+			this.manager.getFirstUnreadTweet();
 			item = R.string.waiting2;
+			
+			getActionBar().setTitle(this.account.getName());
+			
+			ActionBar bar = getActionBar();
+			
+			bar.removeAllTabs();
+
+			bar.addTab(bar.newTab().setText(getString(R.string.tweets))
+					.setTabListener(this));
+			
+			bar.addTab(bar.newTab().setText(getString(R.string.mentions))
+					.setTabListener(this));
+
+			bar.addTab(bar.newTab().setText(getString(R.string.DM))
+					.setTabListener(this));			
+			
+			//bar.setSelectedNavigationItem(0);		
+			currentTab = 0;
 		}
 		Fragment fragment = new waitingFragment();
 
@@ -118,7 +136,6 @@ public class MainActivity extends Activity implements
 		fragment.setArguments(args);
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, fragment).commit();
-		return true;
 	}
 
 	public static class waitingFragment extends Fragment {		
@@ -132,5 +149,46 @@ public class MainActivity extends Activity implements
 			dummyTextView.setText(this.getArguments().getInt("lang")); 
 			return rootView;
 		}
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private int currentTab;
+
+	@Override
+	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
+		if (currentTab == arg0.getPosition())
+		{
+			return;
+		}
+		
+		switch(arg0.getPosition())
+		{
+		case 0:
+			//markWaiting(false);	
+		break;
+		case 1:
+			// Mentions
+		break;
+		
+		case 2:
+			//DMs
+		break;
+		default:
+			throw new RuntimeException("Invalid TAB selected.");
+		}
+		
+	}
+
+	@Override
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,10 +1,21 @@
 package nl.derpt.android.internal;
 
-public class Account {
+import java.io.Serializable;
+
+import nl.derpt.android.internal.JSON.TweetData;
+
+public class Account implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7110491844330038568L;
 
 	private String name;
 	
 	private String id;
+	
+	private TweetData current;
 	
 	/**
 	 * Create a new account based from the server.
@@ -44,5 +55,13 @@ public class Account {
 	public String toString()
 	{
 		return this.name;
+	}
+
+	public TweetData getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(TweetData current) {
+		this.current = current;
 	}
 }
