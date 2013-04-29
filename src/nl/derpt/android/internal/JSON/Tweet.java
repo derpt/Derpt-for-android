@@ -30,4 +30,8 @@ public class Tweet extends Base {
 	// Internal ID
 	public String _id;
 	
+	public TweetUrl urls[];
+	public HashTag hashtags[];
+	public Mention mentions[];
+	
 }

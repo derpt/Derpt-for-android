@@ -9,7 +9,6 @@ import org.apache.http.StatusLine;
 import nl.derpt.android.MainActivity;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * @author paul_000
@@ -38,8 +37,6 @@ public class GetTweet extends GetFirstUnreadTweet {
 			return false;
 		}
 		StatusLine st = response.getStatusLine();
-
-		Log.d("derpt", st.toString());
 
 		if (st.getStatusCode() == 200) {
 			return true;

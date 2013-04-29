@@ -37,7 +37,6 @@ public class TestSession extends Job {
 			return false;
 		}
 
-		Log.d("derpt", "Status:" + response.getStatusLine());
 		StatusLine st = response.getStatusLine();
 
 		if (st.getStatusCode() == 200) {

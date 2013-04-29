@@ -80,7 +80,7 @@ public class GetAccounts extends Job {
 
 		if (st.getStatusCode() == 200) {
 			return true;
-		}
+		} 
 		return false;
 	}
 

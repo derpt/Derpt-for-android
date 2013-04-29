@@ -69,8 +69,6 @@ public class GetFirstUnreadTweet extends Job {
 		}
 		StatusLine st = response.getStatusLine();
 
-		Log.d("derpt", st.toString());
-
 		if (st.getStatusCode() == 200) {
 			return true;
 		}

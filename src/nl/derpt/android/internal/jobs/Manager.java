@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class Manager {
 	private Context context;
@@ -44,23 +43,16 @@ public class Manager {
 	 */
 	// @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	void showProgress(final boolean show) {
-
-		Log.d("derpt", "Current: " + currentActions + " show: " + show);
 		if (show) {
-			
+
 			currentActions++;
-			Log.d("derpt", "New: " + currentActions);
-			if (currentActions > 1)
-			{
-				Log.d("derpt", "return a");
+			if (currentActions > 1) {
 				return;
 			}
-			
+
 		} else {
 			currentActions--;
-			Log.d("derpt", "New: " + currentActions);
 			if (currentActions > 0) {
-				Log.d("derpt", "return b");
 				return;
 			}
 			if (currentActions < 0) {

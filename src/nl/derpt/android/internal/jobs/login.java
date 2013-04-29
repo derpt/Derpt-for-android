@@ -43,12 +43,10 @@ public class Login extends Job {
 			return false;
 		}
 
-		Log.d("derpt", "Status:" + response.getStatusLine());
 		StatusLine st = response.getStatusLine();
 
 		if (st.getStatusCode() == 200) {
 			// It is OK.
-			Log.d("derpt", "OK");
 			return true;
 		} else {
 			Log.d("derpt", "NOT OK");

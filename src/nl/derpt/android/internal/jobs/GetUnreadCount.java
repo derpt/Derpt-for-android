@@ -13,7 +13,6 @@ import nl.derpt.android.R;
 import nl.derpt.android.internal.JSON.UnreadData;
 
 import android.content.Context;
-import android.util.Log;
 /**
  * @author paul_000
  * 
@@ -37,8 +36,6 @@ public class GetUnreadCount extends Job {
 			return false;
 		}
 		StatusLine st = response.getStatusLine();
-
-		Log.d("derpt", st.toString());
 
 		if (st.getStatusCode() == 200) {
 			return true;
