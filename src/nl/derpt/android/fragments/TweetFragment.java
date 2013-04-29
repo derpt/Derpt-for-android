@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.github.ignition.core.widgets.RemoteImageView;
+
 
 public class TweetFragment extends Fragment implements View.OnTouchListener {
 
@@ -22,10 +24,8 @@ public class TweetFragment extends Fragment implements View.OnTouchListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_main_dummy,
+		View rootView = inflater.inflate(R.layout.tweetfragment,
 				container, false);
-		TextView dummyTextView = (TextView) rootView
-				.findViewById(R.id.section_label);
 
 		activity = ((MainActivity) this.getActivity());
 		tweet = activity.account.getCurrent();
@@ -39,11 +39,26 @@ public class TweetFragment extends Fragment implements View.OnTouchListener {
 		
 		activity.manager.markUnread(tweet.tweet._id);
 		
-		dummyTextView.setText(tweet.tweet.text);
+		TextView tweetv = (TextView)rootView.findViewById(R.id.tweet);
+		TextView userv = (TextView)rootView.findViewById(R.id.username);
+		TextView joinv = (TextView)rootView.findViewById(R.id.join);
+		
+		Log.d("derpt", tweet.tweet.user_image_url);
+		
+		RemoteImageView imagev = (RemoteImageView)rootView.findViewById(R.id.avatar);
+		imagev.setImageUrl(tweet.tweet.user_image_url.replace("normal", "bigger"));
+		imagev.loadImage();
+		
+		
+		tweetv.setText(tweet.tweet.text);
+		userv.setText(tweet.tweet.user_name);
+		joinv.setText(tweet.tweet.user_created);
 
 		rootView.setOnTouchListener(this);
 		return rootView;
 	}
+	
+	
 
 	static final int MIN_DISTANCE = 100;
 	private float downX, upX;

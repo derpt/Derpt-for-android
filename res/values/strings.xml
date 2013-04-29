@@ -10,6 +10,6 @@
     <string name="DM">DMs</string>
     <string name="mentions">Mentions</string>
     <string name="tweets">Tweets</string>
-
+	<string name="avatar">Avatar</string>
 
 </resources>

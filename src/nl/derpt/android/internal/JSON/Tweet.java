@@ -1,7 +1,5 @@
 package nl.derpt.android.internal.JSON;
 
-import java.util.Date;
-
 public class Tweet extends Base {
 	
 	// Twitter ID;

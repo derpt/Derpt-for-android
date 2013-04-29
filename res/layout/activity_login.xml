@@ -67,9 +67,11 @@
 
                 <TableRow
                     android:id="@+id/tableRow1"
+                    style=" ?android:attr/buttonBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style=" ?android:attr/buttonBarStyle" >
+                    tools:ignore="UselessParent" >
+
                     <Button
                         android:id="@+id/sign_in_button"
                         android:layout_width="wrap_content"

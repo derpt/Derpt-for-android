@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
@@ -40,12 +39,6 @@ import android.widget.TextView;
  * well.
  */
 public class LoginActivity extends Activity {
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
 
 	/**
 	 * The default email to populate the email field with.
@@ -83,7 +76,7 @@ public class LoginActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
+
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
 						if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -100,7 +93,6 @@ public class LoginActivity extends Activity {
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
-					@Override
 					public void onClick(View view) {
 						attemptLogin();
 					}
@@ -219,7 +211,6 @@ public class LoginActivity extends Activity {
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
 
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost("http://www.derpt.nl/login");
@@ -265,8 +256,6 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				// TODO Save userdata here.
-
 				SharedPreferences prefs = PreferenceManager
 						.getDefaultSharedPreferences(getApplicationContext());
 				SharedPreferences.Editor editor = prefs.edit();

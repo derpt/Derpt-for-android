@@ -153,7 +153,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		}
 	}
 
-	@Override
 	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
 		
@@ -163,10 +162,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	private String unread;
 
-	@Override
 	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
-		
+				
 		if (currentTab == arg0.getPosition())
 		{
 			return;
@@ -190,7 +188,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		
 	}
 
-	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
 		
