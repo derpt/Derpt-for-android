@@ -14,10 +14,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 
 
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -37,7 +39,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	public ArrayList<Account> accounts;
 	
-	public Account account;
+	public Account account; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		int item = R.string.waiting;
 		if (!first) {
 			getActionBar().removeAllTabs();
-			
+			this.manager.getUnreadCount();
 			this.manager.getFirstUnreadTweet();
 			item = R.string.waiting2;
 			
@@ -159,6 +161,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	
 	private int currentTab;
 
+	private String unread;
+
 	@Override
 	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
@@ -190,5 +194,23 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setUnreadCount(String text)
+	{
+		this.unread = text;
+		changeUnreadCountText(this.unread);
+	}
+	
+	private void changeUnreadCountText(String text)
+	{
+		if (menu != null) {
+			MenuItem m = menu
+					.findItem(R.id.menu_unread);
+
+			m.setTitle(text);
+		} else {
+			Log.d("derpt", "menu is null");
+		}			
 	}
 }

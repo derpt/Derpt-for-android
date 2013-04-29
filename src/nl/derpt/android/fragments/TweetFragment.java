@@ -37,6 +37,8 @@ public class TweetFragment extends Fragment implements View.OnTouchListener {
 			//throw new RuntimeException();
 		}
 		
+		activity.manager.markUnread(tweet.tweet._id);
+		
 		dummyTextView.setText(tweet.tweet.text);
 
 		rootView.setOnTouchListener(this);

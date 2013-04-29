@@ -9,24 +9,23 @@ import org.apache.http.StatusLine;
 import android.content.Context;
 import android.util.Log;
 
-
 /**
  * @author paul sohier
- *
+ * 
  */
-public class testSession extends Job {
+public class TestSession extends Job {
 
 	Job nested;
+
 	/**
 	 * @param context
 	 */
-	public testSession(Context context, Manager manager, Job job) {
+	public TestSession(Context context, Manager manager, Job job) {
 		super(context, manager);
-		
+
 		nested = job;
-		
-		if (manager == null)
-		{
+
+		if (manager == null) {
 			throw new RuntimeException();
 		}
 	}
@@ -34,8 +33,7 @@ public class testSession extends Job {
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		HttpResponse response = doGet("/account/authenticated");
-		if (response == null)
-		{
+		if (response == null) {
 			return false;
 		}
 
@@ -51,15 +49,16 @@ public class testSession extends Job {
 			return false;
 		}
 	}
-	
+
 	@Override
 	protected void onPostExecute(final Boolean success) {
-		if (!success)
-		{
+
+		if (!success) {
 			this.manager.login(nested);
-			return;
+		} else {
+			this.manager.RunJob(nested, false);
 		}
-		this.manager.RunJob(nested, false);
-	}	
+		this.manager.showProgress(false);
+	}
 
 }

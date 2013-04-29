@@ -16,7 +16,7 @@ import nl.derpt.android.internal.JSON.TweetData;
 import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
-import android.view.MenuItem;
+
 
 /**
  * @author paul_000
@@ -39,6 +39,7 @@ public class GetFirstUnreadTweet extends Job {
 		if (!result) {
 			// We need a nice way to handle this...
 			Log.d("derpt", "Failure");
+			this.manager.showProgress(false);
 			return;
 		}
 		Gson parser = new Gson();
@@ -48,35 +49,12 @@ public class GetFirstUnreadTweet extends Job {
 		((MainActivity)this.context).account.setCurrent(rs);
 
 		Log.d("derpt", "Data " + rs.tweet.text);
-
-
-		
-		  
 		  
 		Fragment fragment = new TweetFragment();
 
 		((MainActivity) this.context).getFragmentManager().beginTransaction()
 				.replace(R.id.container, fragment).commit();
 		 
-		if (((MainActivity) this.context).menu != null) {
-			MenuItem m = ((MainActivity) this.context).menu
-					.findItem(R.id.menu_unread);
-
-			String text = this.context.getString(R.string.unknown);
-
-			try {
-				if (rs.unread != null && !rs.unread.equals("null")) {
-					text = rs.unread;
-				}
-			} catch (NullPointerException e) {
-
-			}
-
-			m.setTitle(text);
-		} else {
-			Log.d("derpt", "menu is null");
-		}
-
 		this.manager.showProgress(false);
 	}
 

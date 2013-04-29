@@ -22,13 +22,13 @@ import android.content.Context;
  * @author paul_000
  *
  */
-public class getAccounts extends Job {
+public class GetAccounts extends Job {
 	/**
 	 * @param context
 	 * @param manager
 	 * @param adapter
 	 */
-	public getAccounts(Context context,  Manager manager) {
+	public GetAccounts(Context context,  Manager manager) {
 		super(context, manager);
 	}
 
@@ -39,6 +39,7 @@ public class getAccounts extends Job {
 		if (!result)
 		{
 			// We need a nice way to handle this...
+			this.manager.showProgress(false);
 			return;
 		}
 		Gson parser = new Gson();

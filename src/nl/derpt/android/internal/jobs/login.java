@@ -12,7 +12,7 @@ import android.util.Log;
  * @author paul_000
  * 
  */
-public class login extends Job {
+public class Login extends Job {
 	
 	private Job nested;
 
@@ -20,11 +20,11 @@ public class login extends Job {
 	 * @param context
 	 * @param session
 	 */
-	public login(Context context, Manager manager) {
+	public Login(Context context, Manager manager) {
 		super(context, manager);
 	}
 	
-	public login(Context context, Manager manager, Job job)
+	public Login(Context context, Manager manager, Job job)
 	{
 		super(context, manager);
 		nested = job;
@@ -58,13 +58,10 @@ public class login extends Job {
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		if (nested == null)
-		{
-			this.manager.showProgress(false);
-		}
-		else
+		if (nested != null)
 		{
 			this.manager.RunJob(nested);
 		}
+		this.manager.showProgress(false);
 	}
 }
